@@ -5,11 +5,14 @@ public class Node : MonoBehaviour
 {
 
     public Color hoverColor;
+    public Color cantAffordColour;
     public Vector3 positionOffset;
 
     private Renderer _rend;
-    private Color startColor;
-    private GameObject turret;
+    private Color _startColor;
+    [Header("Optional")]
+    public GameObject turret;
+    
     private BuildManager _buildManager;
     
     private void OnMouseEnter()
@@ -18,8 +21,14 @@ public class Node : MonoBehaviour
         {
             return;
         }
-        if (_buildManager.getTurretToBuild() == null)
+        if (!_buildManager.CanBuild)
         {
+            return;
+        }
+
+        if (!_buildManager.CanAfford)
+        {
+            _rend.material.color = cantAffordColour;
             return;
         }
  
@@ -28,13 +37,13 @@ public class Node : MonoBehaviour
 
     private void OnMouseExit()
     {
-        _rend.material.color = startColor;
+        _rend.material.color = _startColor;
     }
 
     private void OnMouseDown()
     {
 
-        if (_buildManager.getTurretToBuild() == null)
+        if (!_buildManager.CanBuild)
         {
             return;
         }
@@ -46,15 +55,14 @@ public class Node : MonoBehaviour
         }
         
         // Build a turret
-        GameObject turretToBuild = BuildManager.Instance.getTurretToBuild();
-        turret = (GameObject) Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
+        _buildManager.BuildTurretOn(this);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         _rend = GetComponent<Renderer>();
-        startColor = _rend.material.color;
+        _startColor = _rend.material.color;
         _buildManager = BuildManager.Instance;
     }
 
@@ -62,5 +70,16 @@ public class Node : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + positionOffset;
+    }
+
+    public void setTurret(GameObject _turret)
+    {
+        turret = _turret;
+
     }
 }

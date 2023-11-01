@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -10,7 +11,7 @@ public class WaveSpawner : MonoBehaviour
     public float spawnDelay = 0.5f;
     public TextMeshProUGUI waveCountDownText;
 
-    public float wavePeriod = 5f;
+    public float wavePeriod = 20f;
     private float _countDown = 2f;
     private int _waveIndex = 1;
     
@@ -24,7 +25,9 @@ public class WaveSpawner : MonoBehaviour
         }
 
         _countDown -= Time.deltaTime;
-        waveCountDownText.text = Mathf.Round(_countDown).ToString();
+
+        _countDown = Math.Clamp(_countDown, 0, Mathf.Infinity);
+        waveCountDownText.text = string.Format("{0:00.00}", _countDown);
 
     }
 

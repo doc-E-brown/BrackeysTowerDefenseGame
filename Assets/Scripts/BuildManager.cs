@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BuildManager : MonoBehaviour
 {
@@ -8,18 +7,36 @@ public class BuildManager : MonoBehaviour
 
     public GameObject standardTurretPrefab;
     public GameObject missileLauncherPrefab;
-    
-    private GameObject turretToBuild;
 
-    public GameObject getTurretToBuild()
+    public GameObject buildEffect;
+    
+    private TurretBlueprint _turretToBuild;
+    
+    public bool CanBuild => _turretToBuild != null;
+    public bool CanAfford => PlayerStats.Money > _turretToBuild.cost;
+
+    public void SelectTurretToBuild(TurretBlueprint turret)
     {
-        return turretToBuild;
+        _turretToBuild = turret;
+
     }
 
-    public void SetTurretToBuild(GameObject turret)
+    public void BuildTurretOn(Node node)
     {
-        turretToBuild = turret;
+        if (PlayerStats.Money < _turretToBuild.cost)
+        {
+            Debug.Log("Not enough money to build");
+            return;
+        }
+        GameObject turret = Instantiate(_turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
+        node.setTurret(turret);
 
+
+        GameObject effect = Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
+        Destroy(effect, 5f);
+        
+        PlayerStats.Money -= _turretToBuild.cost;
+        Debug.Log($"Player money remaining: {PlayerStats.Money}");
     }
 
     private void Awake()
