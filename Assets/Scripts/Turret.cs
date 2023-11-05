@@ -16,6 +16,8 @@ public class Turret : MonoBehaviour
 
     [Header("Use Laser")]
     public bool useLaser = false;
+    public int damageOverTime = 30;
+    public float slowAmount = 0.5f;
     public LineRenderer lineRenderer;
     public ParticleSystem impactEffect;
     public Light impactLight;
@@ -30,15 +32,20 @@ public class Turret : MonoBehaviour
     private float _xRotation = 0f;
     private float _zRotation = 90f;
     private Transform _target;
+    private Enemy _targetEnemy;
     private float _fireCountDown = 0f;
     
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
-        lineRenderer.enabled = false;
-        impactLight.enabled = false;
-        impactEffect.Stop();
+        if (useLaser)
+        {
+            lineRenderer.enabled = false;
+            impactLight.enabled = false;
+            impactEffect.Stop();
+            
+        }
     }
 
     void UpdateTarget()
@@ -61,6 +68,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null && minDistance <= range)
         {
             _target = nearestEnemy.transform;
+            _targetEnemy = _target.GetComponent<Enemy>();
             Debug.Log(_target.transform);
         }
         else
@@ -108,6 +116,10 @@ public class Turret : MonoBehaviour
 
     void FireLaser()
     {
+       
+        _targetEnemy.TakeDamage(damageOverTime * Time.deltaTime);
+        _targetEnemy.Slow(slowAmount);
+        
         if (!lineRenderer.enabled)
         {
             lineRenderer.enabled = true;

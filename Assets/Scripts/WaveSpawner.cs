@@ -39,6 +39,7 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
         } 
         _waveIndex++;
+        PlayerStats.SurvivedRound();
 
     }
 

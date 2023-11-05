@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
@@ -6,7 +7,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    private bool _gameEnded = false;
+    private static bool _gameEnded = false;
+
+    public GameObject gameOverUi;
+
+    private void Start()
+    {
+        _gameEnded = false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -15,6 +23,11 @@ public class GameManager : MonoBehaviour
         if (_gameEnded)
         {
             return;
+        }
+
+        if (Input.GetKeyDown("e"))
+        {
+            EndGame();
         }
 
         if (PlayerStats.Lives <= 0)
@@ -27,6 +40,13 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         _gameEnded = true;
+        gameOverUi.SetActive(true);
        Debug.Log("Game over"); 
     }
+
+    public static bool isGameOver()
+    {
+        return _gameEnded;
+    }
+    
 }

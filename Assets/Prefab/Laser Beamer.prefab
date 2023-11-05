@@ -252,6 +252,7 @@ MonoBehaviour:
   rotationSpeed: 10
   fireRate: 1
   useLaser: 1
+  damageOverTime: 30
   lineRenderer: {fileID: -2757252566529994550}
   impactEffect: {fileID: 8409227973337880851}
   impactLight: {fileID: 163958727580788699}
