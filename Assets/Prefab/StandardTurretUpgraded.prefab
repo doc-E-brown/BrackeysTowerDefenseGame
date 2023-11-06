@@ -56,7 +56,7 @@ MonoBehaviour:
   impactLight: {fileID: 0}
   enemyTag: Enemy
   partToRotate: {fileID: 119411899734216033}
-  bulletPrefab: {fileID: 5522610357738555453, guid: b312e150c8c0e160d949316ff9673c1c, type: 3}
+  bulletPrefab: {fileID: 5522610357738555453, guid: 12497fd08882b7f4297a3699c08f50d3, type: 3}
   firePoint: {fileID: 5858582774922057869}
 --- !u!1 &177181208777773253
 GameObject:

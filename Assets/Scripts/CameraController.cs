@@ -17,14 +17,6 @@ public class CameraController : MonoBehaviour
     public float minZ = -100f;
     public float maxZ = 0f;
     
-    private bool executeMovement = true;
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -33,16 +25,6 @@ public class CameraController : MonoBehaviour
         if (GameManager.isGameOver())
         {
             this.enabled = false;
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            executeMovement = !executeMovement;
-        }
-
-        if (!executeMovement)
-        {
             return;
         }
 

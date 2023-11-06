@@ -60,6 +60,16 @@ public class Node : MonoBehaviour
         PlayerStats.Money -= turretToBuild.cost;
     }
 
+    public void SellTurret()
+    {
+        PlayerStats.Money += currentTurret.SaleCost();
+        
+        GameObject effect = Instantiate(_buildManager.sellEffect, GetBuildPosition(), Quaternion.identity);
+        Destroy(effect, 5f);
+        Destroy(turret);
+        currentTurret = null;
+    }
+
     public void UpgradeTurret()
     {
         if (PlayerStats.Money < currentTurret.cost)
