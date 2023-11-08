@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -30,7 +28,7 @@ public class PlayerStats : MonoBehaviour
 
     public static void SurvivedRound()
     {
-        _roundsSurvived += 1;
+        _roundsSurvived++;
     }
 
     public static int RoundsSurvived()

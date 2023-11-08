@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 
     private static bool _gameEnded = false;
-
     public GameObject gameOverUi;
+    public GameObject completeLevelUi;
 
     private void Start()
     {
@@ -44,9 +40,15 @@ public class GameManager : MonoBehaviour
        Debug.Log("Game over"); 
     }
 
-    public static bool isGameOver()
+    public static bool IsGameOver()
     {
         return _gameEnded;
+    }
+
+    public void WinLevel()
+    {
+        _gameEnded = true;
+        completeLevelUi.SetActive(true);
     }
     
 }

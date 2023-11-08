@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 
     public float panSpeed = 30f;
     public float scrollSpeed = 5f;
-    public float heightThreshold = 10f;
+    public float heightThreshold = 5f;
     public float widthThreshold = 10f;
     
     [Header("Position Limits")]
@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        if (GameManager.isGameOver())
+        if (GameManager.IsGameOver())
         {
             this.enabled = false;
             return;

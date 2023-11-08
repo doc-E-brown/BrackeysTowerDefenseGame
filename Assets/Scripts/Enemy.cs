@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,21 +7,29 @@ public class Enemy : MonoBehaviour
     public float speed;
     
     public float startSpeed = 10f;
-    public float health = 100;
+    private float _health = 100;
+    public float maxHealth = 100;
     public int worth = 10;
     public GameObject deathEffect;
+
+    [Header("Unity Stuff")] public Image healthBar;
+
+    private bool isDead = false;
 
     private void Start()
     {
         speed = startSpeed;
+        _health = maxHealth;
     }
 
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        _health -= damage;
 
-        if (health <= 0f)
+        healthBar.fillAmount = _health / maxHealth; 
+
+        if (_health <= 0f && !isDead)
         {
             Die();
         }
@@ -33,7 +41,11 @@ public class Enemy : MonoBehaviour
         Destroy(effect, 2f);
         
         PlayerStats.AddMoney(worth);
+        WaveSpawner.EnemiesAlive--;
+        
         Destroy(gameObject);
+
+        isDead = true;
     }
     
     public void Slow(float amount)
